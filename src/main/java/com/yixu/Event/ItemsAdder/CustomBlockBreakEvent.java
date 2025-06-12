@@ -1,4 +1,4 @@
-package com.yixu.Listener.ItemsAdder;
+package com.yixu.Event.ItemsAdder;
 
 import com.yixu.Manager.MachineManager.MachineManager;
 import org.bukkit.event.EventHandler;

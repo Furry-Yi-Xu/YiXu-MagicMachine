@@ -1,7 +1,7 @@
 package com.yixu.Manager;
 
-import com.yixu.Listener.ItemsAdder.CustomBlockBreakEvent;
-import com.yixu.Listener.ItemsAdder.CustomBlockInteractEvent;
+import com.yixu.Event.ItemsAdder.CustomBlockBreakEvent;
+import com.yixu.Event.ItemsAdder.CustomBlockInteractEvent;
 import com.yixu.Manager.MachineManager.MachineManager;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
