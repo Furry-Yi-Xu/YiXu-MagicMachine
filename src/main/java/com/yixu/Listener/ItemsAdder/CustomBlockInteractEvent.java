@@ -1,8 +1,9 @@
 package com.yixu.Listener.ItemsAdder;
 
 import com.yixu.Config.MachineConfig;
+import com.yixu.Manager.ConfigManager;
 import com.yixu.Manager.MachineManager.MachineManager;
-import com.yixu.Machine.BirthLantern;
+import com.yixu.Machine.VanillaFarmMachine;
 import com.yixu.Util.Message.MessageUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.plugin.Plugin;
+
+import java.util.List;
 
 public class CustomBlockInteractEvent implements Listener {
 
@@ -33,8 +36,9 @@ public class CustomBlockInteractEvent implements Listener {
         }
 
         MachineConfig machineConfig = new MachineConfig(namespacedID);
+        List<?> farmMachines = ConfigManager.getConfig().getConfig().getStringList("FarmMachines");
 
-        if (!"birth_lantern".equals(machineConfig.getType())) {
+        if (!farmMachines.contains(machineConfig.getType())) {
             return;
         }
 
@@ -46,7 +50,14 @@ public class CustomBlockInteractEvent implements Listener {
             return;
         }
 
-        BirthLantern birthLantern = new BirthLantern(player, location, plugin, machineConfig, machineManager);
-        birthLantern.runBirthLantern();
+        VanillaFarmMachine vanillaFarmMachine = new VanillaFarmMachine(player, location, plugin, machineConfig, machineManager);
+
+        switch (machineConfig.getType()) {
+            case "birth_lantern":
+                vanillaFarmMachine.runBirthLantern();
+                break;
+        }
+
+
     }
 }

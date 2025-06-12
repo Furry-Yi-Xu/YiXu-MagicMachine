@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
-public class BirthLantern implements Listener {
+public class VanillaFarmMachine implements Listener {
 
     private final Plugin plugin;
     private final Player player;
@@ -21,7 +21,7 @@ public class BirthLantern implements Listener {
     private final MachineConfig machineConfig;
     private final MachineManager machineManager;
 
-    public BirthLantern(Player player, Location location, Plugin plugin, MachineConfig machineConfig, MachineManager machineManager) {
+    public VanillaFarmMachine(Player player, Location location, Plugin plugin, MachineConfig machineConfig, MachineManager machineManager) {
         this.player = player;
         this.plugin = plugin;
         this.location = location;
@@ -29,15 +29,28 @@ public class BirthLantern implements Listener {
         this.machineManager = machineManager;
     }
 
-    public void runBirthLantern (){
+    public void runMachineWithHologram(Runnable customTask) {
         ConsumeIAItem consumeIAItem = new ConsumeIAItem();
         if (consumeIAItem.checkItemEnough(player, machineConfig.getConsumeItem(), machineConfig.getConsumeAmount())) {
             DecentHologram decentHologram = new DecentHologram();
             String hologramName = decentHologram.getHologram(location);
             Hologram hologram = DHAPI.getHologram(hologramName);
             machineManager.setWorking(location, true);
-            new HologramCountDownTask(hologram, location, machineConfig , machineManager).runTaskTimer(plugin, 0L, 20L);
-            new CropAcceleratorTask(location, machineConfig, machineManager).runTaskTimer(plugin, 0L, 20L);
+            new HologramCountDownTask(hologram, location, machineConfig, machineManager).runTaskTimer(plugin, 0L, 20L);
+            customTask.run();
         }
+    }
+
+    public void runBirthLantern() {
+        runMachineWithHologram(new Runnable() {
+            @Override
+            public void run() {
+                runCropAcceleratorTask();
+            }
+        });
+    }
+
+    private void runCropAcceleratorTask() {
+        new CropAcceleratorTask(location, machineConfig, machineManager).runTaskTimer(plugin, 0L, 20L);
     }
 }
