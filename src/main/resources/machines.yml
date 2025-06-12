@@ -1,0 +1,7 @@
+customcrops_earth_3:magic_birch_planting_pot:
+  type: "birth_lantern"
+  consume_item: "customcrops:cabbage"
+  consume_amount: 1
+  effect_radius: 2
+  effect_duration: 15
+  growth_chance: 0.25
