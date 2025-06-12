@@ -1,8 +1,6 @@
 package com.yixu.Manager.MachineManager;
 
-import com.yixu.Manager.ListenerManager;
 import org.bukkit.Location;
-import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -45,7 +45,7 @@ public class CustomBlockInteractEvent implements Listener {
         Location location = event.getBlockClicked().getLocation();
 
         if (machineManager.isWorking(location)) {
-            MessageUtil.sendMessage(player, "lantern.machine_started");
+            MessageUtil.sendMessage(player, "farm.machine_started");
             event.setCancelled(true);
             return;
         }
@@ -53,8 +53,8 @@ public class CustomBlockInteractEvent implements Listener {
         VanillaFarmMachine vanillaFarmMachine = new VanillaFarmMachine(player, location, plugin, machineConfig, machineManager);
 
         switch (machineConfig.getType()) {
-            case "birth_lantern":
-                vanillaFarmMachine.runBirthLantern();
+            case "birth_machine":
+                vanillaFarmMachine.runBirthMachine();
                 break;
         }
 

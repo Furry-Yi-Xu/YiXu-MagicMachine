@@ -33,7 +33,7 @@ public class HologramCountDownTask extends BukkitRunnable {
         }
 
         Map<String, String> placeholders = Map.of("remaining", String.valueOf(duration));
-        DHAPI.setHologramLine(hologram, 0, MessageUtil.getMessage("lantern.duration-hologram", placeholders));
+        DHAPI.setHologramLine(hologram, 0, MessageUtil.getMessage("farm.duration-hologram", placeholders));
         duration--;
     }
 }

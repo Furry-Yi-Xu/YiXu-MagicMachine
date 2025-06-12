@@ -41,7 +41,7 @@ public class VanillaFarmMachine implements Listener {
         }
     }
 
-    public void runBirthLantern() {
+    public void runBirthMachine() {
         runMachineWithHologram(new Runnable() {
             @Override
             public void run() {

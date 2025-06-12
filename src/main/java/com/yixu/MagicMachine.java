@@ -2,7 +2,7 @@ package com.yixu;
 
 import com.yixu.Manager.CommandManager;
 import com.yixu.Manager.ConfigManager;
-import com.yixu.Manager.ListenerManager;
+import com.yixu.Manager.EventManager;
 import com.yixu.Manager.MachineManager.MachineManager;
 import com.yixu.Util.Message.MessageUtil;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,7 +25,7 @@ public final class MagicMachine extends JavaPlugin {
 
         MessageUtil.init(this);
         ConfigManager.init(this);
-        ListenerManager.init(this, machineManager);
+        EventManager.init(this, machineManager);
     }
 
     @Override

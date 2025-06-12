@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import static com.yixu.Util.Permission.PermissionNodes.MainPREFIX;
-import static com.yixu.Util.Permission.PermissionsCheck.checkPermission;
+import static com.yixu.Util.Permission.PermissionCheck.checkPermission;
 
 public class Reload implements CommandExecutor {
     @Override

@@ -7,7 +7,7 @@ commands:
   reload:
     reload-succeed: "%prefix% &a配置已重新加载！"
 
-lantern:
+farm:
   invalid_item: "%prefix% 这不是一个有效的启动物品"
   insufficient_item: "%prefix% 启动物品数量不足！"
   machine_started: "%prefix% &a当前机械正在运行中！"

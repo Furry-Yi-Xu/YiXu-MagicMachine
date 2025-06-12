@@ -28,7 +28,7 @@ public class ConsumeIAItem {
             return true;
         }
 
-        MessageUtil.sendMessage(player, "lantern.insufficient_item");
+        MessageUtil.sendMessage(player, "farm.insufficient_item");
         return false;
     }
 

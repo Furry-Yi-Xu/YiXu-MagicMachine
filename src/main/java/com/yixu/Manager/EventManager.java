@@ -6,7 +6,7 @@ import com.yixu.Manager.MachineManager.MachineManager;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-public class ListenerManager {
+public class EventManager {
 
     public static void init(Plugin plugin, MachineManager machineManager) {
         PluginManager pluginManager = plugin.getServer().getPluginManager();

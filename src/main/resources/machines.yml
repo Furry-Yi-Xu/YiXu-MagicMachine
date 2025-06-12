@@ -1,5 +1,5 @@
 customcrops_earth_3:magic_birch_planting_pot:
-  type: "birth_lantern"
+  type: "birth_machine"
   consume_item: "customcrops:cabbage"
   consume_amount: 1
   effect_radius: 2

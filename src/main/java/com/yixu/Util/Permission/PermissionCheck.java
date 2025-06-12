@@ -4,7 +4,7 @@ import com.yixu.Util.Message.MessageUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class PermissionsCheck {
+public class PermissionCheck {
 
     /**
      * 检查命令是否由玩家执行，否则发送提示。
