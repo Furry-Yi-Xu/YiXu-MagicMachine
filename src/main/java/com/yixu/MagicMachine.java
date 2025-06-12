@@ -1,5 +1,6 @@
 package com.yixu;
 
+import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.CommandManager;
 import com.yixu.Manager.ConfigManager;
 import com.yixu.Manager.EventManager;
@@ -10,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class MagicMachine extends JavaPlugin {
 
     private static MagicMachine instance;
+    private MachineTaskScheduler scheduler;
 
     public MagicMachine() {
         super();
@@ -18,14 +20,17 @@ public final class MagicMachine extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        MachineManager machineManager = new MachineManager();
+        scheduler = new MachineTaskScheduler();
+        scheduler.runTaskTimer(this, 0L, 20L);
 
-        getLogger().info("YiXu-MagicMachine 插件已加载！");
-        getCommand("yixu-magicmachine").setExecutor(new CommandManager());
+        MachineManager machineManager = new MachineManager();
 
         MessageUtil.init(this);
         ConfigManager.init(this);
-        EventManager.init(this, machineManager);
+        EventManager.init(this, machineManager, scheduler);
+
+        getLogger().info("YiXu-MagicMachine 插件已加载！");
+        getCommand("yixu-magicmachine").setExecutor(new CommandManager());
     }
 
     @Override
@@ -35,6 +40,10 @@ public final class MagicMachine extends JavaPlugin {
 
     public static MagicMachine getInstance() {
         return instance;
+    }
+
+    public MachineTaskScheduler getScheduler() {
+        return scheduler;
     }
 
 }

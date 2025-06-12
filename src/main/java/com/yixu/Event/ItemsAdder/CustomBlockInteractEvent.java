@@ -1,6 +1,7 @@
 package com.yixu.Event.ItemsAdder;
 
 import com.yixu.Config.MachineConfig;
+import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.ConfigManager;
 import com.yixu.Manager.MachineManager.MachineManager;
 import com.yixu.Machine.VanillaFarmMachine;
@@ -18,10 +19,12 @@ public class CustomBlockInteractEvent implements Listener {
 
     private final Plugin plugin;
     private final MachineManager machineManager;
+    private final MachineTaskScheduler machineTaskScheduler;
 
-    public CustomBlockInteractEvent(Plugin plugin, MachineManager machineManager) {
+    public CustomBlockInteractEvent(Plugin plugin, MachineManager machineManager, MachineTaskScheduler machineTaskScheduler) {
         this.plugin = plugin;
         this.machineManager = machineManager;
+        this.machineTaskScheduler = machineTaskScheduler;
     }
 
     @EventHandler
@@ -50,14 +53,12 @@ public class CustomBlockInteractEvent implements Listener {
             return;
         }
 
-        VanillaFarmMachine vanillaFarmMachine = new VanillaFarmMachine(player, location, plugin, machineConfig, machineManager);
+        VanillaFarmMachine vanillaFarmMachine = new VanillaFarmMachine(player, location, plugin, machineConfig, machineManager ,machineTaskScheduler);
 
         switch (machineConfig.getType()) {
             case "birth_machine":
                 vanillaFarmMachine.runBirthMachine();
                 break;
         }
-
-
     }
 }
