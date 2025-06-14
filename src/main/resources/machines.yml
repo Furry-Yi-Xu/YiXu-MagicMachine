@@ -5,3 +5,10 @@ customcrops_earth_3:magic_birch_planting_pot:
   effect_radius: 2
   effect_duration: 15
   growth_chance: 0.25
+
+customcrops_earth_3:resonance_end_shadow_ore:
+  type: "collect_machine"
+  consume_item: "customcrops:chinese_cabbage"
+  consume_amount: 1
+  effect_radius: 2
+  effect_duration: 15

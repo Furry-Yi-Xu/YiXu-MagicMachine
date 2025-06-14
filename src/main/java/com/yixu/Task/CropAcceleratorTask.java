@@ -32,8 +32,8 @@ public class CropAcceleratorTask extends MachineTask {
 
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
-                Location loc = location.clone().add(dx, 0, dz);
-                Block block = loc.getBlock();
+                Location centerLocation = location.clone().add(dx, 0, dz);
+                Block block = centerLocation.getBlock();
                 BlockData blockData = block.getBlockData();
 
                 if (blockData instanceof Ageable ageable) {

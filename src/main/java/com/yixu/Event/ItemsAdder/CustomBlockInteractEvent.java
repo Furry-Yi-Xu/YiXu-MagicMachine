@@ -1,5 +1,6 @@
 package com.yixu.Event.ItemsAdder;
 
+import com.yixu.Cache.ChestCacheManager;
 import com.yixu.Config.MachineConfig;
 import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.ConfigManager;
@@ -20,11 +21,13 @@ public class CustomBlockInteractEvent implements Listener {
     private final Plugin plugin;
     private final MachineManager machineManager;
     private final MachineTaskScheduler machineTaskScheduler;
+    private final ChestCacheManager chestCacheManager;
 
-    public CustomBlockInteractEvent(Plugin plugin, MachineManager machineManager, MachineTaskScheduler machineTaskScheduler) {
+    public CustomBlockInteractEvent(Plugin plugin, MachineManager machineManager, MachineTaskScheduler machineTaskScheduler, ChestCacheManager chestCacheManager) {
         this.plugin = plugin;
         this.machineManager = machineManager;
         this.machineTaskScheduler = machineTaskScheduler;
+        this.chestCacheManager = chestCacheManager;
     }
 
     @EventHandler
@@ -53,11 +56,15 @@ public class CustomBlockInteractEvent implements Listener {
             return;
         }
 
-        VanillaFarmMachine vanillaFarmMachine = new VanillaFarmMachine(player, location, plugin, machineConfig, machineManager ,machineTaskScheduler);
+        VanillaFarmMachine vanillaFarmMachine = new VanillaFarmMachine(player, location, plugin, machineConfig, machineManager, machineTaskScheduler, chestCacheManager);
 
         switch (machineConfig.getType()) {
             case "birth_machine":
                 vanillaFarmMachine.runBirthMachine();
+                break;
+
+            case "collect_machine":
+                vanillaFarmMachine.runCollectMachine();
                 break;
         }
     }

@@ -1,2 +1,3 @@
 FarmMachines:
   - birth_machine
+  - collect_machine

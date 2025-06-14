@@ -1,5 +1,6 @@
 package com.yixu;
 
+import com.yixu.Cache.ChestCacheManager;
 import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.CommandManager;
 import com.yixu.Manager.ConfigManager;
@@ -10,8 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MagicMachine extends JavaPlugin {
 
-    private static MagicMachine instance;
-    private MachineTaskScheduler scheduler;
+    private static MagicMachine magicMachine;
 
     public MagicMachine() {
         super();
@@ -19,18 +19,21 @@ public final class MagicMachine extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        instance = this;
-        scheduler = new MachineTaskScheduler();
-        scheduler.runTaskTimer(this, 0L, 20L);
+        magicMachine = this;
 
+        MachineTaskScheduler machineTaskScheduler = new MachineTaskScheduler();
         MachineManager machineManager = new MachineManager();
+        ChestCacheManager chestCacheManager = new ChestCacheManager();
+
+        machineTaskScheduler.runTaskTimer(this, 0L, 20L);
 
         MessageUtil.init(this);
         ConfigManager.init(this);
-        EventManager.init(this, machineManager, scheduler);
+        EventManager.init(this, machineManager, machineTaskScheduler, chestCacheManager);
+
+        getCommand("yixu-magicmachine").setExecutor(new CommandManager());
 
         getLogger().info("YiXu-MagicMachine 插件已加载！");
-        getCommand("yixu-magicmachine").setExecutor(new CommandManager());
     }
 
     @Override
@@ -38,12 +41,7 @@ public final class MagicMachine extends JavaPlugin {
         getLogger().info("YiXu-MagicMachine 插件已卸载！");
     }
 
-    public static MagicMachine getInstance() {
-        return instance;
+    public static MagicMachine getMagicMachine() {
+        return magicMachine;
     }
-
-    public MachineTaskScheduler getScheduler() {
-        return scheduler;
-    }
-
 }
