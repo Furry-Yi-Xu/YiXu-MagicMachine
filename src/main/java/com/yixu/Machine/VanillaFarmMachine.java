@@ -5,7 +5,7 @@ import com.yixu.Config.MachineConfig;
 import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.MachineManager.MachineManager;
 import com.yixu.Task.CropAcceleratorTask;
-import com.yixu.Task.FindNearestChest;
+import com.yixu.Task.DropCollectorTask;
 import com.yixu.Task.HologramCountDownTask;
 import com.yixu.Task.MachineTask;
 import com.yixu.Util.Hologram.DecentHologram;
@@ -14,7 +14,6 @@ import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -51,6 +50,7 @@ public class VanillaFarmMachine implements Listener {
                     location,
                     machineConfig.getEffectDuration(),
                     machineConfig.getEffectRadius(),
+                    machineConfig.getEffectHeight(),
                     machineConfig.getGrowthChance(),
                     machineManager
             );
@@ -70,13 +70,28 @@ public class VanillaFarmMachine implements Listener {
     public void runCollectMachine() {
         ConsumeIAItem consumeIAItem = new ConsumeIAItem();
         if (consumeIAItem.checkItemEnough(player, machineConfig.getConsumeItem(), machineConfig.getConsumeAmount())) {
-            if (chestCacheManager.getChestCache(location) == null) {
-                FindNearestChest findNearestChest = new FindNearestChest(location, machineConfig.getEffectRadius(), chestCacheManager);
-                Chest nearestChest = findNearestChest.FindNearestChest();
-            }
-            else {
-                Chest chestCache = chestCacheManager.getChestCache(location);
-            }
+            DecentHologram decentHologram = new DecentHologram();
+            String hologramName = decentHologram.getHologram(location);
+            Hologram hologram = DHAPI.getHologram(hologramName);
+            machineManager.setWorking(location, true);
+
+            DropCollectorTask dropCollectorTask = new DropCollectorTask(
+                    location,
+                    machineConfig.getEffectDuration(),
+                    machineConfig.getEffectRadius(),
+                    machineConfig.getEffectHeight(),
+                    machineManager,
+                    chestCacheManager
+            );
+
+            HologramCountDownTask hologramCountDownTask = new HologramCountDownTask(
+                    hologram,
+                    location,
+                    machineConfig.getEffectDuration()
+            );
+
+            machineTaskScheduler.addTask(location ,dropCollectorTask);
+            machineTaskScheduler.addTask(location ,hologramCountDownTask);
         }
     }
 }

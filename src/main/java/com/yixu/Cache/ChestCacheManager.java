@@ -28,7 +28,14 @@ public class ChestCacheManager {
             return null;
         }
 
-        return (Chest) block.getState();
+        Chest chest = (Chest) block.getState();
+
+        if (chest.getInventory().firstEmpty() == -1) {
+            chestLocationCache.remove(location);
+            return null;
+        }
+
+        return chest;
     }
 
     public void putChestCache(Location location, Chest chest) {

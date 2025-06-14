@@ -4,6 +4,7 @@ customcrops_earth_3:magic_birch_planting_pot:
   consume_amount: 1
   effect_radius: 2
   effect_duration: 15
+  effect_height: 10
   growth_chance: 0.25
 
 customcrops_earth_3:resonance_end_shadow_ore:
@@ -12,3 +13,4 @@ customcrops_earth_3:resonance_end_shadow_ore:
   consume_amount: 1
   effect_radius: 2
   effect_duration: 15
+  effect_height: 2

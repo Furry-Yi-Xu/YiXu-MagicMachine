@@ -7,6 +7,7 @@ import com.yixu.Manager.ConfigManager;
 import com.yixu.Manager.MachineManager.MachineManager;
 import com.yixu.Machine.VanillaFarmMachine;
 import com.yixu.Util.Message.MessageUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -1,0 +1,82 @@
+package com.yixu.Task;
+
+import com.yixu.Cache.ChestCacheManager;
+import com.yixu.Manager.MachineManager.MachineManager;
+import com.yixu.Util.Chest.ChestFinder;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+
+public class DropCollectorTask extends MachineTask{
+
+    private final int radius;
+    private final int height;
+    private final MachineManager machineManager;
+    private final ChestCacheManager chestCacheManager;
+
+    private Chest nearestChest;
+
+    public DropCollectorTask(Location location, int duration, int radius, int height, MachineManager machineManager, ChestCacheManager chestCacheManager) {
+        super(location, duration);
+        this.radius = radius;
+        this.height = height - 1;
+        this.machineManager = machineManager;
+        this.chestCacheManager= chestCacheManager;
+    }
+
+    @Override
+    public void tick() {
+        duration--;
+
+        if (isFinished()) {
+            machineManager.setWorking(location, false);
+        }
+
+        Chest chestCache = chestCacheManager.getChestCache(location);
+
+        if (chestCache == null) {
+            ChestFinder chestFinder = new ChestFinder(location, radius, height, chestCacheManager);
+            nearestChest = chestFinder.FindNearestChest();
+        }
+        else {
+            nearestChest = chestCache;
+        }
+
+        if (nearestChest != null) {
+            chestCacheManager.putChestCache(location, nearestChest);
+        }
+        else {
+            return;
+        }
+
+        Inventory chestInventory = nearestChest.getInventory();
+
+        for (Entity entity : location.getNearbyEntities(radius, height, radius)) {
+
+            if (entity instanceof Item item) {
+
+                ItemStack itemStack = item.getItemStack();
+
+                if(itemStack.getType() != Material.AIR) {
+
+                    HashMap<Integer, ItemStack> itemStackHashMap = chestInventory.addItem(itemStack);
+
+                    if (itemStackHashMap.isEmpty()) {
+                        item.remove();
+                    }
+                    else {
+                        item.setItemStack(itemStackHashMap.values().iterator().next());
+                    }
+
+                }
+            }
+        }
+    }
+}

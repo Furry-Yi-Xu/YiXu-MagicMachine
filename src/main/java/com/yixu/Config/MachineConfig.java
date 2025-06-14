@@ -34,6 +34,10 @@ public class MachineConfig {
         return ConfigManager.getMachineConfig().getConfig().getInt(path + "effect_duration");
     }
 
+    public int getEffectHeight() {
+        return ConfigManager.getMachineConfig().getConfig().getInt(path + "effect_height");
+    }
+
     public double getGrowthChance() {
         return ConfigManager.getMachineConfig().getConfig().getDouble(path + "growth_chance");
     }

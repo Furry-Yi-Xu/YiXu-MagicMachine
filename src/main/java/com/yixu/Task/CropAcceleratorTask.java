@@ -11,13 +11,15 @@ import java.util.Random;
 
 public class CropAcceleratorTask extends MachineTask {
     private final int radius;
+    private final int height;
     private final double chance;
     private final MachineManager machineManager;
     private final Random random = new Random();
 
-    public CropAcceleratorTask(Location location, int duration, int radius, double chance, MachineManager machineManager) {
+    public CropAcceleratorTask(Location location, int duration, int radius, int height, double chance, MachineManager machineManager) {
         super(location ,duration);
         this.radius = radius;
+        this.height = height - 1;
         this.chance = chance;
         this.machineManager = machineManager;
     }
@@ -32,7 +34,7 @@ public class CropAcceleratorTask extends MachineTask {
 
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
-                Location centerLocation = location.clone().add(dx, 0, dz);
+                Location centerLocation = location.clone().add(dx, height, dz);
                 Block block = centerLocation.getBlock();
                 BlockData blockData = block.getBlockData();
 
