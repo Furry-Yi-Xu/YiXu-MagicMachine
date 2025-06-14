@@ -17,7 +17,7 @@ public class CropAcceleratorTask extends MachineTask {
     private final Random random = new Random();
 
     public CropAcceleratorTask(Location location, int duration, int radius, int height, double chance, MachineManager machineManager) {
-        super(location ,duration);
+        super(location, duration);
         this.radius = radius;
         this.height = height - 1;
         this.chance = chance;
@@ -33,19 +33,20 @@ public class CropAcceleratorTask extends MachineTask {
         }
 
         for (int dx = -radius; dx <= radius; dx++) {
-            for (int dz = -radius; dz <= radius; dz++) {
-                Location centerLocation = location.clone().add(dx, height, dz);
-                Block block = centerLocation.getBlock();
-                BlockData blockData = block.getBlockData();
+            for (int dy = -height; dy <= height; dy++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    Location centerLocation = location.clone().add(dx, dy, dz);
+                    Block block = centerLocation.getBlock();
+                    BlockData blockData = block.getBlockData();
 
-                if (blockData instanceof Ageable ageable) {
-                    if (ageable.getAge() < ageable.getMaximumAge() && random.nextDouble() < chance) {
-                        ageable.setAge(ageable.getAge() + 1);
-                        block.setBlockData(ageable);
+                    if (blockData instanceof Ageable ageable) {
+                        if (ageable.getAge() < ageable.getMaximumAge() && random.nextDouble() < chance) {
+                            ageable.setAge(ageable.getAge() + 1);
+                            block.setBlockData(ageable);
+                        }
                     }
                 }
             }
         }
     }
 }
-

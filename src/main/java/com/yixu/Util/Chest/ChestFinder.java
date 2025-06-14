@@ -16,7 +16,7 @@ public class ChestFinder {
     private Block nearestChest = null;
     private double nearestDistance = Double.MAX_VALUE;
 
-    public ChestFinder(Location location, int radius,int height, ChestCacheManager chestCacheManager) {
+    public ChestFinder(Location location, int radius, int height, ChestCacheManager chestCacheManager) {
         this.location = location;
         this.radius = radius;
         this.height = height;
@@ -25,24 +25,27 @@ public class ChestFinder {
 
     public Chest FindNearestChest() {
         for (int dx = -radius; dx <= radius; dx++) {
-            for (int dz = -radius; dz <= radius; dz++) {
-                Location centerLocation = location.clone().add(dx, height, dz);
-                Block block = centerLocation.getBlock();
+            for (int dy = -height; dy <= height; dy++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    Location checkLoc = location.clone().add(dx, dy, dz);
+                    Block block = checkLoc.getBlock();
 
-                if (block.getState() instanceof Chest chest) {
-                    if (chest.getInventory().firstEmpty() == -1) {
-                        continue;
-                    }
+                    if (block.getState() instanceof Chest chest) {
+                        if (chest.getInventory().firstEmpty() == -1) {
+                            continue;
+                        }
 
-                    double distanceToChest = block.getLocation().distanceSquared(location);
+                        double distanceToChest = block.getLocation().distanceSquared(location);
 
-                    if (distanceToChest < nearestDistance) {
-                        nearestChest = block;
-                        nearestDistance = distanceToChest;
+                        if (distanceToChest < nearestDistance) {
+                            nearestChest = block;
+                            nearestDistance = distanceToChest;
+                        }
                     }
                 }
             }
         }
+
         if (nearestChest != null) {
             return (Chest) nearestChest.getState();
         }
