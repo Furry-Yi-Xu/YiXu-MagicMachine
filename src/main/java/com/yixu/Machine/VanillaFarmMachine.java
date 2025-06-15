@@ -12,7 +12,6 @@ import com.yixu.Util.Hologram.DecentHologram;
 import com.yixu.Util.Item.ConsumeIAItem;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -38,7 +37,7 @@ public class VanillaFarmMachine implements Listener {
         this.chestCacheManager = chestCacheManager;
     }
 
-    public void runBirthMachine() {
+    public void addMachineTask(MachineTask machineTask) {
         ConsumeIAItem consumeIAItem = new ConsumeIAItem();
         if (consumeIAItem.checkItemEnough(player, machineConfig.getConsumeItem(), machineConfig.getConsumeAmount())) {
             DecentHologram decentHologram = new DecentHologram();
@@ -46,52 +45,38 @@ public class VanillaFarmMachine implements Listener {
             Hologram hologram = DHAPI.getHologram(hologramName);
             machineManager.setWorking(location, true);
 
-            MachineTask cropAcceleratorTask = new CropAcceleratorTask(
-                    location,
-                    machineConfig.getEffectDuration(),
-                    machineConfig.getEffectRadius(),
-                    machineConfig.getEffectHeight(),
-                    machineConfig.getGrowthChance(),
-                    machineManager
-            );
-
             HologramCountDownTask hologramCountDownTask = new HologramCountDownTask(
                     hologram,
                     location,
                     machineConfig.getEffectDuration()
             );
 
-            machineTaskScheduler.addTask(location ,cropAcceleratorTask);
+            machineTaskScheduler.addTask(location ,machineTask);
             machineTaskScheduler.addTask(location ,hologramCountDownTask);
-
         }
     }
 
+    public void runBirthMachine() {
+        MachineTask cropAcceleratorTask = new CropAcceleratorTask(
+                location,
+                machineConfig.getEffectDuration(),
+                machineConfig.getEffectRadius(),
+                machineConfig.getEffectHeight(),
+                machineConfig.getGrowthChance(),
+                machineManager
+        );
+        addMachineTask(cropAcceleratorTask);
+    }
+
     public void runCollectMachine() {
-        ConsumeIAItem consumeIAItem = new ConsumeIAItem();
-        if (consumeIAItem.checkItemEnough(player, machineConfig.getConsumeItem(), machineConfig.getConsumeAmount())) {
-            DecentHologram decentHologram = new DecentHologram();
-            String hologramName = decentHologram.getHologram(location);
-            Hologram hologram = DHAPI.getHologram(hologramName);
-            machineManager.setWorking(location, true);
-
-            DropCollectorTask dropCollectorTask = new DropCollectorTask(
-                    location,
-                    machineConfig.getEffectDuration(),
-                    machineConfig.getEffectRadius(),
-                    machineConfig.getEffectHeight(),
-                    machineManager,
-                    chestCacheManager
-            );
-
-            HologramCountDownTask hologramCountDownTask = new HologramCountDownTask(
-                    hologram,
-                    location,
-                    machineConfig.getEffectDuration()
-            );
-
-            machineTaskScheduler.addTask(location ,dropCollectorTask);
-            machineTaskScheduler.addTask(location ,hologramCountDownTask);
-        }
+        DropCollectorTask dropCollectorTask = new DropCollectorTask(
+                location,
+                machineConfig.getEffectDuration(),
+                machineConfig.getEffectRadius(),
+                machineConfig.getEffectHeight(),
+                machineManager,
+                chestCacheManager
+        );
+        addMachineTask(dropCollectorTask);
     }
 }

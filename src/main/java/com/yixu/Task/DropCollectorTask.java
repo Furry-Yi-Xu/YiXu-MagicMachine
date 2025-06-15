@@ -21,12 +21,10 @@ public class DropCollectorTask extends MachineTask{
     private final MachineManager machineManager;
     private final ChestCacheManager chestCacheManager;
 
-    private Chest nearestChest;
-
     public DropCollectorTask(Location location, int duration, int radius, int height, MachineManager machineManager, ChestCacheManager chestCacheManager) {
         super(location, duration);
         this.radius = radius;
-        this.height = height - 1;
+        this.height = height;
         this.machineManager = machineManager;
         this.chestCacheManager= chestCacheManager;
     }
@@ -39,25 +37,6 @@ public class DropCollectorTask extends MachineTask{
             machineManager.setWorking(location, false);
         }
 
-        Chest chestCache = chestCacheManager.getChestCache(location);
-
-        if (chestCache == null) {
-            ChestFinder chestFinder = new ChestFinder(location, radius, height, chestCacheManager);
-            nearestChest = chestFinder.FindNearestChest();
-        }
-        else {
-            nearestChest = chestCache;
-        }
-
-        if (nearestChest != null) {
-            chestCacheManager.putChestCache(location, nearestChest);
-        }
-        else {
-            return;
-        }
-
-        Inventory chestInventory = nearestChest.getInventory();
-
         for (Entity entity : location.getNearbyEntities(radius, height, radius)) {
 
             if (entity instanceof Item item) {
@@ -65,6 +44,27 @@ public class DropCollectorTask extends MachineTask{
                 ItemStack itemStack = item.getItemStack();
 
                 if(itemStack.getType() != Material.AIR) {
+
+                    Chest chestCache = chestCacheManager.getChestCache(location);
+                    Chest nearestChest = null;
+
+                    if (chestCache == null) {
+                        ChestFinder chestFinder = new ChestFinder(location, radius, height, itemStack, chestCacheManager);
+                        nearestChest = chestFinder.FindNearestChest();
+
+                        if (nearestChest != null) {
+                            chestCacheManager.putChestCache(location, nearestChest);
+                        }
+                        else {
+                            return;
+                        }
+
+                    }
+                    else {
+                        nearestChest = chestCache;
+                    }
+
+                    Inventory chestInventory = nearestChest.getInventory();
 
                     HashMap<Integer, ItemStack> itemStackHashMap = chestInventory.addItem(itemStack);
 

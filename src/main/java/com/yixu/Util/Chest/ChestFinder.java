@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class ChestFinder {
 
@@ -12,14 +14,16 @@ public class ChestFinder {
     private final int radius;
     private final int height;
     private final ChestCacheManager chestCacheManager;
+    private ItemStack itemStack;
 
     private Block nearestChest = null;
     private double nearestDistance = Double.MAX_VALUE;
 
-    public ChestFinder(Location location, int radius, int height, ChestCacheManager chestCacheManager) {
+    public ChestFinder(Location location, int radius, int height, ItemStack itemStack, ChestCacheManager chestCacheManager) {
         this.location = location;
         this.radius = radius;
         this.height = height;
+        this.itemStack = itemStack;
         this.chestCacheManager = chestCacheManager;
     }
 
@@ -31,7 +35,8 @@ public class ChestFinder {
                     Block block = checkLoc.getBlock();
 
                     if (block.getState() instanceof Chest chest) {
-                        if (chest.getInventory().firstEmpty() == -1) {
+
+                        if (!CanPutItemInChest(chest, itemStack)) {
                             continue;
                         }
 
@@ -51,5 +56,25 @@ public class ChestFinder {
         }
 
         return null;
+    }
+
+    public Boolean CanPutItemInChest(Chest chest, ItemStack itemStack) {
+
+        if (chest.getInventory().firstEmpty() != -1) {
+            return true;
+        }
+
+        for(ItemStack slotItem : chest.getInventory().getContents()) {
+
+            if (slotItem == null) {
+                continue;
+            }
+
+            if (slotItem.isSimilar(itemStack) && slotItem.getAmount() <= slotItem.getMaxStackSize()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

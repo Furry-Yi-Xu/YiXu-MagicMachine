@@ -19,7 +19,7 @@ public class CropAcceleratorTask extends MachineTask {
     public CropAcceleratorTask(Location location, int duration, int radius, int height, double chance, MachineManager machineManager) {
         super(location, duration);
         this.radius = radius;
-        this.height = height - 1;
+        this.height = height;
         this.chance = chance;
         this.machineManager = machineManager;
     }
