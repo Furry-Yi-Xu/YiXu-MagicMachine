@@ -14,3 +14,12 @@ customcrops_earth_3:resonance_end_shadow_ore:
   effect_radius: 3
   effect_duration: 15
   effect_height: 2
+
+customcrops_earth_3:deepslate_magic_crystal_ore:
+  type: "killing_machine"
+  consume_item: "customcrops:corn"
+  consume_amount: 1
+  effect_radius: 3
+  effect_duration: 15
+  effect_height: 2
+  monster_damage: 2

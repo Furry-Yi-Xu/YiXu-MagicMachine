@@ -67,6 +67,9 @@ public class CustomBlockInteractEvent implements Listener {
             case "collect_machine":
                 vanillaFarmMachine.runCollectMachine();
                 break;
+            case "killing_machine":
+                vanillaFarmMachine.runKillingMachine();
+                break;
         }
     }
 }

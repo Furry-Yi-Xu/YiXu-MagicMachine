@@ -18,7 +18,7 @@ public class HologramCountDownTask extends MachineTask {
     }
 
     @Override
-    public void tick() {
+    public void machineTask() {
         duration--;
 
         if (isFinished()) {

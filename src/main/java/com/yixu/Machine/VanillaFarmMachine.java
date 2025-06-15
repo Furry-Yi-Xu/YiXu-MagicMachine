@@ -4,10 +4,7 @@ import com.yixu.Cache.ChestCacheManager;
 import com.yixu.Config.MachineConfig;
 import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.MachineManager.MachineManager;
-import com.yixu.Task.CropAcceleratorTask;
-import com.yixu.Task.DropCollectorTask;
-import com.yixu.Task.HologramCountDownTask;
-import com.yixu.Task.MachineTask;
+import com.yixu.Task.*;
 import com.yixu.Util.Hologram.DecentHologram;
 import com.yixu.Util.Item.ConsumeIAItem;
 import eu.decentsoftware.holograms.api.DHAPI;
@@ -79,4 +76,17 @@ public class VanillaFarmMachine implements Listener {
         );
         addMachineTask(dropCollectorTask);
     }
+
+    public void runKillingMachine() {
+        MobKillerTask mobKillerTask = new MobKillerTask(
+                location,
+                machineConfig.getEffectDuration(),
+                machineConfig.getEffectRadius(),
+                machineConfig.getEffectHeight(),
+                machineConfig.getMonsterDamage(),
+                machineManager
+        );
+        addMachineTask(mobKillerTask);
+    }
+
 }

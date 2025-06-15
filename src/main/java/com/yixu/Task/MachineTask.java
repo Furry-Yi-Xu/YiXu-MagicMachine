@@ -15,5 +15,5 @@ public abstract class MachineTask {
         return duration <= 0;
     }
 
-    public abstract void tick();
+    public abstract void machineTask();
 }

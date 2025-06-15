@@ -41,4 +41,9 @@ public class MachineConfig {
     public double getGrowthChance() {
         return ConfigManager.getMachineConfig().getConfig().getDouble(path + "growth_chance");
     }
+
+    public double getMonsterDamage() {
+        return ConfigManager.getMachineConfig().getConfig().getDouble(path + "monster_damage");
+    }
+
 }
