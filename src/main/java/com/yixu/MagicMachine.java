@@ -1,6 +1,7 @@
 package com.yixu;
 
 import com.yixu.Cache.ChestCacheManager;
+import com.yixu.Command.MainCommand.MainTabCompleter;
 import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.CommandManager;
 import com.yixu.Manager.ConfigManager;
@@ -32,6 +33,7 @@ public final class MagicMachine extends JavaPlugin {
         EventManager.init(this, machineManager, machineTaskScheduler, chestCacheManager);
 
         getCommand("yixu-magicmachine").setExecutor(new CommandManager());
+        getCommand("yixu-magicmachine").setTabCompleter(new MainTabCompleter());
 
         getLogger().info("YiXu-MagicMachine 插件已加载！");
     }

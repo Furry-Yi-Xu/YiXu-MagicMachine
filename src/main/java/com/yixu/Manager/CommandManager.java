@@ -1,6 +1,6 @@
 package com.yixu.Manager;
 
-import com.yixu.Command.Reload;
+import com.yixu.Command.MainCommand.MainCommand;
 import com.yixu.Util.Message.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +19,7 @@ public class CommandManager implements CommandExecutor {
 
         switch (sub) {
             case "reload":
-                return new Reload().onCommand(sender, command, label, args);
+                return new MainCommand().onCommand(sender, command, label, args);
             default:
                 MessageUtil.sendMessage(sender, "commands.command-usage");
                 return true;

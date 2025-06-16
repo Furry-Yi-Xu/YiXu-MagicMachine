@@ -13,7 +13,7 @@ public class PermissionCheck {
      */
     public static boolean checkIsPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            MessageUtil.sendMessage(sender, "only-player");
+            MessageUtil.sendMessage(sender, "commands.only-player");
             return false;
         }
         return true;
@@ -27,7 +27,7 @@ public class PermissionCheck {
      */
     public static boolean checkPermission(CommandSender sender, String permission) {
         if (!sender.hasPermission(permission)) {
-            MessageUtil.sendMessage(sender, "no-Permission");
+            MessageUtil.sendMessage(sender, "commands.no-permission");
             return false;
         }
         return true;
