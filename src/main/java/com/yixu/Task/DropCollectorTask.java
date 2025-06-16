@@ -12,6 +12,7 @@ public class DropCollectorTask extends MachineTask {
     private final int height;
     private final MachineManager machineManager;
     private final ChestCacheManager chestCacheManager;
+    private final DropCollectorProcessor dropCollectorProcessor;
 
     public DropCollectorTask(
             Location location,
@@ -19,13 +20,15 @@ public class DropCollectorTask extends MachineTask {
             int radius,
             int height,
             MachineManager machineManager,
-            ChestCacheManager chestCacheManager
+            ChestCacheManager chestCacheManager,
+            DropCollectorProcessor dropCollectorProcessor
     ) {
         super(location, duration);
         this.radius = radius;
         this.height = height;
         this.machineManager = machineManager;
         this.chestCacheManager = chestCacheManager;
+        this.dropCollectorProcessor = dropCollectorProcessor;
     }
 
     @Override
@@ -36,7 +39,6 @@ public class DropCollectorTask extends MachineTask {
             machineManager.setWorking(location, false);
         }
 
-        DropCollectorProcessor dropCollectorProcessor = new DropCollectorProcessor();
         dropCollectorProcessor.runDropCollector(location, radius, height, chestCacheManager);
 
     }

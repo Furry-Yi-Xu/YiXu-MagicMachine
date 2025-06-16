@@ -9,15 +9,18 @@ import org.bukkit.Location;
 public class HologramCountDownTask extends MachineTask {
 
     private final Hologram hologram;
+    private final HologramCountDownProcessor hologramCountDownProcessor;
 
     public HologramCountDownTask(
             Hologram hologram,
             Location location,
-            int duration
+            int duration,
+            HologramCountDownProcessor hologramCountDownProcessor
     ) {
         super(location, duration);
         this.duration = duration;
         this.hologram = hologram;
+        this.hologramCountDownProcessor = hologramCountDownProcessor;
     }
 
     @Override
@@ -29,7 +32,6 @@ public class HologramCountDownTask extends MachineTask {
             return;
         }
 
-        HologramCountDownProcessor hologramCountDownProcessor = new HologramCountDownProcessor();
         hologramCountDownProcessor.runHologramCountDown(duration, hologram);
 
     }

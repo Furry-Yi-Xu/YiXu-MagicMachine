@@ -4,6 +4,10 @@ import com.yixu.Cache.ChestCacheManager;
 import com.yixu.Config.MachineConfig;
 import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.MachineManager.MachineManager;
+import com.yixu.Processor.CropAcceleratorProcessor;
+import com.yixu.Processor.DropCollectorProcessor;
+import com.yixu.Processor.HologramCountDownProcessor;
+import com.yixu.Processor.MobKillerProcessor;
 import com.yixu.Task.*;
 import com.yixu.Task.AbstractTask.MachineTask;
 import com.yixu.Util.Hologram.DecentHologram;
@@ -39,58 +43,89 @@ public class VanillaMagicMachine implements Listener {
         ConsumeIAItem consumeIAItem = new ConsumeIAItem();
         if (consumeIAItem.checkItemEnough(player, machineConfig.getConsumeItem(), machineConfig.getConsumeAmount())) {
             DecentHologram decentHologram = new DecentHologram();
+            HologramCountDownProcessor hologramCountDownProcessor = new HologramCountDownProcessor();
+
             String hologramName = decentHologram.getHologram(location);
             Hologram hologram = DHAPI.getHologram(hologramName);
+
             machineManager.setWorking(location, true);
 
             HologramCountDownTask hologramCountDownTask = new HologramCountDownTask(
                     hologram,
                     location,
-                    machineConfig.getEffectDuration()
+                    machineConfig.getEffectDuration(),
+                    hologramCountDownProcessor
             );
 
-            machineTaskScheduler.addTask(location ,machineTask);
-            machineTaskScheduler.addTask(location ,hologramCountDownTask);
+            machineTaskScheduler.addTask(location, machineTask);
+            machineTaskScheduler.addTask(location, hologramCountDownTask);
         }
     }
 
     public void runBirthMachine() {
+
+        CropAcceleratorProcessor cropAcceleratorProcessor = new CropAcceleratorProcessor();
+
         MachineTask cropAcceleratorTask = new CropAcceleratorTask(
                 location,
                 machineConfig.getEffectDuration(),
                 machineConfig.getEffectRadius(),
                 machineConfig.getEffectHeight(),
                 machineConfig.getGrowthChance(),
-                machineManager
+                machineManager,
+                cropAcceleratorProcessor
         );
         addMachineTask(cropAcceleratorTask);
     }
 
     public void runCollectMachine() {
+
+        DropCollectorProcessor dropCollectorProcessor = new DropCollectorProcessor();
+
         DropCollectorTask dropCollectorTask = new DropCollectorTask(
                 location,
                 machineConfig.getEffectDuration(),
                 machineConfig.getEffectRadius(),
                 machineConfig.getEffectHeight(),
                 machineManager,
-                chestCacheManager
+                chestCacheManager,
+                dropCollectorProcessor
         );
         addMachineTask(dropCollectorTask);
     }
 
     public void runKillingMachine() {
+
+        MobKillerProcessor mobKillerProcessor = new MobKillerProcessor();
+
         MobKillerTask mobKillerTask = new MobKillerTask(
                 location,
                 machineConfig.getEffectDuration(),
                 machineConfig.getEffectRadius(),
                 machineConfig.getEffectHeight(),
                 machineConfig.getMonsterDamage(),
-                machineManager
+                machineManager,
+                mobKillerProcessor
         );
         addMachineTask(mobKillerTask);
     }
 
     public void runTerraMachine() {
 
+        CropAcceleratorProcessor cropAcceleratorProcessor = new CropAcceleratorProcessor();
+        DropCollectorProcessor dropCollectorProcessor = new DropCollectorProcessor();
+
+        TerraMachineTask terraMachineTask = new TerraMachineTask(
+                location,
+                machineConfig.getEffectDuration(),
+                machineConfig.getEffectRadius(),
+                machineConfig.getEffectHeight(),
+                machineConfig.getGrowthChance(),
+                machineManager,
+                chestCacheManager,
+                cropAcceleratorProcessor,
+                dropCollectorProcessor
+        );
+        addMachineTask(terraMachineTask);
     }
 }

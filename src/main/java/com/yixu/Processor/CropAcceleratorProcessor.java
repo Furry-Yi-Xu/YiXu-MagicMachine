@@ -28,18 +28,17 @@ public class CropAcceleratorProcessor {
 
                     if (blockData instanceof Ageable ageable) {
 
+                        if (ageable.getAge() < ageable.getMaximumAge() && random.nextDouble() < chance) {
+                            ageable.setAge(ageable.getAge() + 1);
+                            block.setBlockData(ageable);
+                        }
+
                         if (ageable.getAge() == ageable.getMaximumAge()) {
                             Collection<ItemStack> blockDrops = block.getDrops();
                             for (ItemStack itemStack : blockDrops) {
                                 centerLocation.getWorld().dropItemNaturally(centerLocation, itemStack);
                             }
                             ageable.setAge(0);
-                            block.setBlockData(ageable);
-                            return;
-                        }
-
-                        if (ageable.getAge() < ageable.getMaximumAge() && random.nextDouble() < chance) {
-                            ageable.setAge(ageable.getAge() + 1);
                             block.setBlockData(ageable);
                         }
                     }

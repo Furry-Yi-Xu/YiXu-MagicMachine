@@ -11,13 +11,23 @@ public class MobKillerTask extends MachineTask {
     private final int height;
     private final double damage;
     private final MachineManager machineManager;
+    private final MobKillerProcessor mobKillerProcessor;
 
-    public MobKillerTask(Location location, int duration, int radius, int height, double damage, MachineManager machineManager) {
+    public MobKillerTask(
+            Location location,
+            int duration,
+            int radius,
+            int height,
+            double damage,
+            MachineManager machineManager,
+            MobKillerProcessor mobKillerProcessor
+    ) {
         super(location, duration);
         this.radius = radius;
         this.height = height;
         this.damage = damage;
         this.machineManager = machineManager;
+        this.mobKillerProcessor = mobKillerProcessor;
     }
 
     @Override
@@ -28,7 +38,6 @@ public class MobKillerTask extends MachineTask {
             machineManager.setWorking(location, false);
         }
 
-        MobKillerProcessor mobKillerProcessor = new MobKillerProcessor();
         mobKillerProcessor.runMobKiller(location, radius, height, damage, machineManager);
 
     }
