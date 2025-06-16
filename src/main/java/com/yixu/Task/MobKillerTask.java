@@ -1,13 +1,11 @@
 package com.yixu.Task;
 
 import com.yixu.Manager.MachineManager.MachineManager;
+import com.yixu.Processor.MobKillerProcessor;
+import com.yixu.Task.AbstractTask.MachineTask;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Monster;
 
-import java.util.Random;
-
-public class MobKillerTask extends MachineTask{
+public class MobKillerTask extends MachineTask {
 
     private final int radius;
     private final int height;
@@ -30,10 +28,8 @@ public class MobKillerTask extends MachineTask{
             machineManager.setWorking(location, false);
         }
 
-        for (Entity entity : location.getNearbyEntities(radius, height, radius)) {
-            if (entity instanceof Monster monster) {
-                monster.damage(damage);
-            }
-        }
+        MobKillerProcessor mobKillerProcessor = new MobKillerProcessor();
+        mobKillerProcessor.runMobKiller(location, radius, height, damage, machineManager);
+
     }
 }

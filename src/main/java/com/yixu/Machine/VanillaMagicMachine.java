@@ -5,6 +5,7 @@ import com.yixu.Config.MachineConfig;
 import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.MachineManager.MachineManager;
 import com.yixu.Task.*;
+import com.yixu.Task.AbstractTask.MachineTask;
 import com.yixu.Util.Hologram.DecentHologram;
 import com.yixu.Util.Item.ConsumeIAItem;
 import eu.decentsoftware.holograms.api.DHAPI;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
-public class VanillaFarmMachine implements Listener {
+public class VanillaMagicMachine implements Listener {
 
     private final Plugin plugin;
     private final Player player;
@@ -24,7 +25,7 @@ public class VanillaFarmMachine implements Listener {
     private final MachineTaskScheduler machineTaskScheduler;
     private final ChestCacheManager chestCacheManager;
 
-    public VanillaFarmMachine(Player player, Location location, Plugin plugin, MachineConfig machineConfig, MachineManager machineManager, MachineTaskScheduler machineTaskScheduler, ChestCacheManager chestCacheManager) {
+    public VanillaMagicMachine(Player player, Location location, Plugin plugin, MachineConfig machineConfig, MachineManager machineManager, MachineTaskScheduler machineTaskScheduler, ChestCacheManager chestCacheManager) {
         this.player = player;
         this.plugin = plugin;
         this.location = location;
@@ -89,4 +90,7 @@ public class VanillaFarmMachine implements Listener {
         addMachineTask(mobKillerTask);
     }
 
+    public void runTerraMachine() {
+
+    }
 }

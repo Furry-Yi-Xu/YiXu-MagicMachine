@@ -1,18 +1,21 @@
 package com.yixu.Task;
 
-import com.yixu.Util.Message.MessageUtil;
+import com.yixu.Processor.HologramCountDownProcessor;
+import com.yixu.Task.AbstractTask.MachineTask;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.Location;
 
-
-import java.util.Map;
-
 public class HologramCountDownTask extends MachineTask {
+
     private final Hologram hologram;
 
-    public HologramCountDownTask(Hologram hologram, Location location, int duration) {
-        super(location ,duration);
+    public HologramCountDownTask(
+            Hologram hologram,
+            Location location,
+            int duration
+    ) {
+        super(location, duration);
         this.duration = duration;
         this.hologram = hologram;
     }
@@ -22,11 +25,12 @@ public class HologramCountDownTask extends MachineTask {
         duration--;
 
         if (isFinished()) {
-            DHAPI.setHologramLine(hologram, 0, "&r");
+            DHAPI.setHologramLine(hologram, 0, "");
             return;
         }
 
-        Map<String, String> placeholders = Map.of("remaining", String.valueOf(duration));
-        DHAPI.setHologramLine(hologram, 0, MessageUtil.getMessage("farm.duration-hologram", placeholders));
+        HologramCountDownProcessor hologramCountDownProcessor = new HologramCountDownProcessor();
+        hologramCountDownProcessor.runHologramCountDown(duration, hologram);
+
     }
 }

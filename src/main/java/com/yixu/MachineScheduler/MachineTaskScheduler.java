@@ -1,6 +1,6 @@
 package com.yixu.MachineScheduler;
 
-import com.yixu.Task.MachineTask;
+import com.yixu.Task.AbstractTask.MachineTask;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 

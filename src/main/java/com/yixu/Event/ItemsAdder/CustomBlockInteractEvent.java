@@ -5,9 +5,8 @@ import com.yixu.Config.MachineConfig;
 import com.yixu.MachineScheduler.MachineTaskScheduler;
 import com.yixu.Manager.ConfigManager;
 import com.yixu.Manager.MachineManager.MachineManager;
-import com.yixu.Machine.VanillaFarmMachine;
+import com.yixu.Machine.VanillaMagicMachine;
 import com.yixu.Util.Message.MessageUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +31,7 @@ public class CustomBlockInteractEvent implements Listener {
     }
 
     @EventHandler
-    public void onCustomBlockInteract(dev.lone.itemsadder.api.Events.CustomBlockInteractEvent event){
+    public void onCustomBlockInteract(dev.lone.itemsadder.api.Events.CustomBlockInteractEvent event) {
 
         Player player = event.getPlayer();
         Action action = event.getAction();
@@ -57,18 +56,20 @@ public class CustomBlockInteractEvent implements Listener {
             return;
         }
 
-        VanillaFarmMachine vanillaFarmMachine = new VanillaFarmMachine(player, location, plugin, machineConfig, machineManager, machineTaskScheduler, chestCacheManager);
+        VanillaMagicMachine vanillaMagicMachine = new VanillaMagicMachine(player, location, plugin, machineConfig, machineManager, machineTaskScheduler, chestCacheManager);
 
         switch (machineConfig.getType()) {
             case "birth_machine":
-                vanillaFarmMachine.runBirthMachine();
+                vanillaMagicMachine.runBirthMachine();
                 break;
-
             case "collect_machine":
-                vanillaFarmMachine.runCollectMachine();
+                vanillaMagicMachine.runCollectMachine();
                 break;
             case "killing_machine":
-                vanillaFarmMachine.runKillingMachine();
+                vanillaMagicMachine.runKillingMachine();
+                break;
+            case "terra_machine":
+                vanillaMagicMachine.runTerraMachine();
                 break;
         }
     }

@@ -1,10 +1,12 @@
-package com.yixu.Task;
+package com.yixu.Task.AbstractTask;
 
 import org.bukkit.Location;
 
 public abstract class MachineTask {
     protected Location location;
     protected int duration;
+
+    public abstract void machineTask();
 
     public MachineTask(Location location, int duration) {
         this.location = location;
@@ -15,5 +17,4 @@ public abstract class MachineTask {
         return duration <= 0;
     }
 
-    public abstract void machineTask();
 }
