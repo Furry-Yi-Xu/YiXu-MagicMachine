@@ -8,7 +8,11 @@ commands:
     reload-succeed: "%prefix% &a配置已重新加载！"
 
 farm:
-  invalid_item: "%prefix% 这不是一个有效的启动物品"
+  invalid_item: "%prefix% 这不是一个有效的启动物品！"
   insufficient_item: "%prefix% 启动物品数量不足！"
   machine_started: "%prefix% &a当前机械正在运行中！"
   duration-hologram: "当前剩余 %remaining% 秒的时间"
+
+infinite_water_machine:
+  invalid_item: "%prefix% 下方不存在水源！"
+  machine_started: "%prefix% &a当前机械正在运行中！"

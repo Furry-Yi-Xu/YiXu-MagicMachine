@@ -37,7 +37,7 @@ public class CropAcceleratorTask extends MachineTask {
             machineManager.setWorking(location, false);
         }
 
-        cropAcceleratorProcessor.runCropAccelerator(location, radius, height, chance);
+        cropAcceleratorProcessor.runMinecraftCropAccelerator(location, radius, height, chance);
 
     }
 }

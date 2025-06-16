@@ -14,10 +14,18 @@ import com.yixu.Util.Hologram.DecentHologram;
 import com.yixu.Util.Item.ConsumeIAItem;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
+import net.momirealms.customcrops.api.BukkitCustomCropsAPI;
+import net.momirealms.customcrops.api.BukkitCustomCropsPlugin;
+import net.momirealms.customcrops.api.CustomCropsAPI;
+import net.momirealms.customcrops.api.core.world.CustomCropsWorld;
+import net.momirealms.customcrops.api.core.world.Pos3;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Optional;
 
 public class VanillaMagicMachine implements Listener {
 
@@ -112,6 +120,9 @@ public class VanillaMagicMachine implements Listener {
 
     public void runTerraMachine() {
 
+        CustomCropsAPI customCropsAPI = BukkitCustomCropsAPI.get();
+        CustomCropsWorld<?> customCropsWorld = BukkitCustomCropsPlugin.getInstance().getWorldManager().getWorld(location.getWorld().getName()).get();
+
         CropAcceleratorProcessor cropAcceleratorProcessor = new CropAcceleratorProcessor();
         DropCollectorProcessor dropCollectorProcessor = new DropCollectorProcessor();
 
@@ -121,6 +132,10 @@ public class VanillaMagicMachine implements Listener {
                 machineConfig.getEffectRadius(),
                 machineConfig.getEffectHeight(),
                 machineConfig.getGrowthChance(),
+                machineConfig.getType(),
+                player,
+                customCropsWorld,
+                customCropsAPI,
                 machineManager,
                 chestCacheManager,
                 cropAcceleratorProcessor,

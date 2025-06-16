@@ -37,6 +37,11 @@
       <option name="url" value="https://jitpack.io/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="momirealms" />
+      <option name="name" value="momirealms" />
+      <option name="url" value="https://repo.momirealms.net/releases/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="matteodev" />
       <option name="name" value="matteodev" />
       <option name="url" value="https://repo1.maven.org/maven2/" />

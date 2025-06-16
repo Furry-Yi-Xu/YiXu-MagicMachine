@@ -3,3 +3,4 @@ FarmMachines:
   - collect_machine
   - killing_machine
   - terra_machine
+  - customcrops_terra_machine

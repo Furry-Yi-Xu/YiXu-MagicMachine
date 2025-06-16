@@ -32,3 +32,12 @@ customcrops_earth_3:deepslate_terra_ore:
   effect_duration: 15
   effect_height: 2
   growth_chance: 0.25
+
+customcrops:gigantic_tomato:
+  type: "customcrops_terra_machine"
+  consume_item: "customcrops:garlic"
+  consume_amount: 1
+  effect_radius: 3
+  effect_duration: 15
+  effect_height: 2
+  growth_chance: 0.25
